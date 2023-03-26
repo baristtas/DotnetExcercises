@@ -1,4 +1,5 @@
-﻿using WebApplication1.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using WebApplication1.Data;
 using WebApplication1.Interfaces;
 using WebApplication1.Models;
 
@@ -20,27 +21,29 @@ namespace WebApplication1.Repository
 
         public bool Delete(Club club)
         {
-            throw new NotImplementedException();
+            m_context.Remove(club);
+            return Save();
         }
 
-        public Task<IEnumerable<Club>> GetAll()
+        public async Task<IEnumerable<Club>> GetAll()
         {
-            throw new NotImplementedException();
+            return await m_context.Clubs.ToListAsync();
         }
 
-        public Task<Club> GetByIdAsync(int id)
+        public async Task<Club> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await m_context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public Task<IEnumerable<Club>> GetClubByCity(string city)
+        public async Task<IEnumerable<Club>> GetClubByCity(string city)
         {
-            throw new NotImplementedException();
+            return await m_context.Clubs.Where(c => c.Address.City == city).ToListAsync();
         }
 
         public bool Save()
         {
-            return true;
+            var isSaved = m_context.SaveChanges();
+            return isSaved > 0 ? true: false;   
         }
 
         public bool Update(Club club)
