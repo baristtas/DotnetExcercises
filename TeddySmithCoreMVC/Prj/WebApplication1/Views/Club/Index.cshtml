@@ -20,7 +20,7 @@
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                    <a type="button" class="btn btn-sm btn-outline-secondary" asp-controller="Club" asp-action="Detail" asp-route-id="@item.Id">View</a>
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                 </div>
                                 <small class="text-muted">@item.ClubCategory.ToString()</small>
