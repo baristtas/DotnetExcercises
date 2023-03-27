@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using WebApplication1.Data;
 using WebApplication1.Interfaces;
 using WebApplication1.Models;
@@ -32,12 +33,12 @@ namespace WebApplication1.Repository
 
         public async Task<Club> GetByIdAsync(int id)
         {
-            return await m_context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
+            return await m_context.Clubs.Include(i => i.Address).FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<IEnumerable<Club>> GetClubByCity(string city)
         {
-            return await m_context.Clubs.Where(c => c.Address.City == city).ToListAsync();
+            return await m_context.Clubs.Include(i => i.Address).Where(c => c.Address.City == city).ToListAsync();
         }
 
         public bool Save()
@@ -48,7 +49,8 @@ namespace WebApplication1.Repository
 
         public bool Update(Club club)
         {
-            throw new NotImplementedException();
-        }
+            m_context.Update(club);
+            return Save();
+        }    
     }
 }

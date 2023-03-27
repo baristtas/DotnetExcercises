@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using RunGroopWebApp.Data;
 using WebApplication1.Data;
+using WebApplication1.Interfaces;
+using WebApplication1.Repository;
 
 namespace WebApplication1
 {
@@ -12,6 +14,8 @@ namespace WebApplication1
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IClubRepository,ClubRepository>();
+            builder.Services.AddScoped<IRaceRepository,RaceRepository>();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
