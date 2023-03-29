@@ -4,8 +4,7 @@
 *@
 @{
 }
-<form>
-    <div style="margin:90px">
+<form method="post" asp-action="Create">
     <div class="form-group">
         <label asp-for="Title">Title</label>
         <input asp-for="Title" class="form-control" id="Title" placeholder="Enter Title">
@@ -48,6 +47,7 @@
         <input asp-for="Address.State" class="form-control" placeholder="Enter State">
         <span asp-validation-for="Address.State" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary" asp-action="">Submit</button>
-    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+        

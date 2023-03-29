@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Interfaces;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -26,10 +27,21 @@ namespace WebApplication1.Controllers
             return View(club);
         }
 
-        //Test 3
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();  
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Club club)
+        {
+            if(!ModelState.IsValid)
+            {
+                //return View(club);
+            }
+
+            m_clubRepository.Add(club); 
+            return RedirectToAction("Index");
         }
     }
 }
