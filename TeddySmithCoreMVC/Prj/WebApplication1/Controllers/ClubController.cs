@@ -37,7 +37,7 @@ namespace WebApplication1.Controllers
         {
             if(!ModelState.IsValid)
             {
-                //return View(club);
+                return View(club);
             }
 
             m_clubRepository.Add(club); 

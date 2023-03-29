@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Interfaces;
+using WebApplication1.Models;
+using WebApplication1.Repository;
 
 namespace WebApplication1.Controllers
 {
@@ -22,6 +24,24 @@ namespace WebApplication1.Controllers
         {
             Models.Race race = await m_raceRepository.GetByIdAsync(id);
             return View(race);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Race race)
+        {
+            if (!ModelState.IsValid)
+            {
+                //return View(race);
+            }
+
+            m_raceRepository.Add(race);
+            return RedirectToAction("Index");
         }
     }
 }
