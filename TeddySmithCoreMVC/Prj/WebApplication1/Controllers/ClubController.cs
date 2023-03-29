@@ -26,6 +26,7 @@ namespace WebApplication1.Controllers
             return View(club);
         }
 
+        //Test
         public IActionResult Create()
         {
             return View();  
