@@ -25,5 +25,10 @@ namespace WebApplication1.Controllers
             Models.Club club = await m_clubRepository.GetByIdAsync(id);
             return View(club);
         }
+
+        public IActionResult Create()
+        {
+            return View();  
+        }
     }
 }
