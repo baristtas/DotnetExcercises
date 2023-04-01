@@ -3,16 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Interfaces;
 using WebApplication1.Models;
+using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
     public class ClubController : Controller
     {
         private readonly IClubRepository m_clubRepository;
+        private readonly IPhotoService m_photoService;
 
-        public ClubController(IClubRepository clubRepository)
+        public ClubController(IClubRepository clubRepository, IPhotoService photoService)
         {
             m_clubRepository= clubRepository;
+            m_photoService= photoService;
         }
 
         public async Task<IActionResult> Index()
@@ -33,15 +36,27 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Club club)
+        public async Task<IActionResult> Create(CreateClubViewModel clubViewModel)
         {
-            if(!ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                return View(club);
+                var result = await m_photoService.AddPhotoAsync(clubViewModel.Image);
+
+                var club = new Club
+                {
+                    Title = clubViewModel.Title,
+                    Description = clubViewModel.Description,
+                    Image = result.Url.ToString()
+                };
+                m_clubRepository.Add(club);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Photo upload failed");
             }
 
-            m_clubRepository.Add(club); 
-            return RedirectToAction("Index");
+            return View(clubViewModel);
         }
     }
 }
