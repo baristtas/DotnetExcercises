@@ -46,7 +46,13 @@ namespace WebApplication1.Controllers
                 {
                     Title = clubViewModel.Title,
                     Description = clubViewModel.Description,
-                    Image = result.Url.ToString()
+                    Image = result.Url.ToString(),
+                    Address = new Address
+                    {
+                        City = clubViewModel.Address.City,
+                        State = clubViewModel.Address.State,
+                        Street= clubViewModel.Address.Street
+                    }
                 };
                 m_clubRepository.Add(club);
                 return RedirectToAction("Index");
