@@ -14,8 +14,8 @@ namespace WebApplication1.Controllers
 
         public ClubController(IClubRepository clubRepository, IPhotoService photoService)
         {
-            m_clubRepository= clubRepository;
-            m_photoService= photoService;
+            m_clubRepository = clubRepository;
+            m_photoService = photoService;
         }
 
         public async Task<IActionResult> Index()

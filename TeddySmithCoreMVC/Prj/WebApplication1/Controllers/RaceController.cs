@@ -4,16 +4,19 @@ using WebApplication1.Data;
 using WebApplication1.Interfaces;
 using WebApplication1.Models;
 using WebApplication1.Repository;
+using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
     public class RaceController : Controller
     {
         private readonly IRaceRepository m_raceRepository;
+        private readonly IPhotoService m_photoService;
 
-        public RaceController(IRaceRepository raceRepository)
+        public RaceController(IRaceRepository raceRepository, IPhotoService photoService)
         {
-            m_raceRepository = raceRepository; 
+            m_raceRepository = raceRepository;
+            m_photoService = photoService;
         }
         public async Task<IActionResult> Index()
         {
@@ -33,14 +36,29 @@ namespace WebApplication1.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(Race race)
+        public async Task<IActionResult> Create(CreateRaceViewModel raceVM)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                //return View(race);
-            }
+                var uploadedImage = await m_photoService.AddPhotoAsync(raceVM.Image);
 
-            m_raceRepository.Add(race);
+                Race RaceToAdd = new Race
+                {
+                    Title = raceVM.Title,
+                    Description = raceVM.Description,
+                    RaceCategory = raceVM.RaceCategory,
+                    Image = uploadedImage.Url.ToString(),
+
+                    Address = new Address
+                    {
+                        Street = raceVM.Address.Street,
+                        City = raceVM.Address.City,
+                        State = raceVM.Address.State
+                    }
+                };
+                m_raceRepository.Add(RaceToAdd);
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
         }
     }
