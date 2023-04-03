@@ -121,5 +121,24 @@ namespace WebApplication1.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var clubDetails = await m_clubRepository.GetByIdAsync(id);
+            if (clubDetails == null) return View("Error");
+
+            return View(clubDetails);
+        }
+
+        [HttpPost, ActionName("DeleteClub")]
+        public async Task<IActionResult> DeleteClub(int id)
+        {
+            var clubToDelete = await m_clubRepository.GetByIdAsync(id);
+            if (clubToDelete == null) return View("Error");
+            m_clubRepository.Delete(clubToDelete);
+
+            return RedirectToAction("Index");
+        }
     }
 }

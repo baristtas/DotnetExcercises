@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Interfaces;
 using WebApplication1.Models;
+using WebApplication1.Repository;
 using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
@@ -112,6 +113,25 @@ namespace WebApplication1.Controllers
 
                 m_raceRepository.Update(userClub);
             }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var raceDetails = await m_raceRepository.GetByIdAsync(id);
+            if (raceDetails == null) return View("Error");
+
+            return View(raceDetails);
+        }
+
+        [HttpPost, ActionName("DeleteClub")]
+        public async Task<IActionResult> DeleteClub(int id)
+        {
+            var raceToDelete = await m_raceRepository.GetByIdAsync(id);
+            if (raceToDelete == null) return View("Error");
+            m_raceRepository.Delete(raceToDelete);
 
             return RedirectToAction("Index");
         }
