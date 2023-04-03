@@ -1,8 +1,8 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\baris.tas\\Desktop\\csh\\TeddySmithCoreMVC\\Prj\\WebApplication1\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\WebApplication1.bundle.scp.css",
-      "PackagePath": "staticwebassets\\WebApplication1.bundle.scp.css"
+      "Id": "C:\\Users\\baris.tas\\Desktop\\csh\\TeddySmithCoreMVC\\Prj\\WebApplication1\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\RunGroopWebApp.bundle.scp.css",
+      "PackagePath": "staticwebassets\\RunGroopWebApp.bundle.scp.css"
     },
     {
       "Id": "C:\\Users\\baris.tas\\Desktop\\csh\\TeddySmithCoreMVC\\Prj\\WebApplication1\\wwwroot\\css\\site.css",
@@ -245,20 +245,20 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.WebApplication1.Microsoft.AspNetCore.StaticWebAssets.props",
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.RunGroopWebApp.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
     {
-      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.WebApplication1.props",
-      "PackagePath": "build\\WebApplication1.props"
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.RunGroopWebApp.props",
+      "PackagePath": "build\\RunGroopWebApp.props"
     },
     {
-      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.WebApplication1.props",
-      "PackagePath": "buildMultiTargeting\\WebApplication1.props"
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.RunGroopWebApp.props",
+      "PackagePath": "buildMultiTargeting\\RunGroopWebApp.props"
     },
     {
-      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.WebApplication1.props",
-      "PackagePath": "buildTransitive\\WebApplication1.props"
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.RunGroopWebApp.props",
+      "PackagePath": "buildTransitive\\RunGroopWebApp.props"
     }
   ],
   "ElementsToRemove": []

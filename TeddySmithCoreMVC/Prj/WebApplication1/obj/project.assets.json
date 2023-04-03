@@ -10640,9 +10640,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\baris.tas\\Desktop\\csh\\TeddySmithCoreMVC\\Prj\\WebApplication1\\WebApplication1.csproj",
-      "projectName": "WebApplication1",
-      "projectPath": "C:\\Users\\baris.tas\\Desktop\\csh\\TeddySmithCoreMVC\\Prj\\WebApplication1\\WebApplication1.csproj",
+      "projectUniqueName": "C:\\Users\\baris.tas\\Desktop\\csh\\TeddySmithCoreMVC\\Prj\\WebApplication1\\RunGroopWebApp.csproj",
+      "projectName": "RunGroopWebApp",
+      "projectPath": "C:\\Users\\baris.tas\\Desktop\\csh\\TeddySmithCoreMVC\\Prj\\WebApplication1\\RunGroopWebApp.csproj",
       "packagesPath": "C:\\Users\\baris.tas\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\baris.tas\\Desktop\\csh\\TeddySmithCoreMVC\\Prj\\WebApplication1\\obj\\",
       "projectStyle": "PackageReference",

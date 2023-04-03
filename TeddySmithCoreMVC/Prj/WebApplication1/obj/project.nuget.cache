@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "P/gsqBiBOIfj8BPm+pqwhc1NXfrZ51Z2mYcfgF8YoF57E2cNYt8yK+/wSNa6R7tA/kcqCHYkNfptShiKvAxHIg==",
+  "dgSpecHash": "5AuVJmDBFENLDY4VYy4qWvxhN4+OqFEOBcDb2oU4NKceNmK/FNoNeNMaKfHaxf5687I5PYILKP0qxc3wcB0ieQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\baris.tas\\Desktop\\csh\\TeddySmithCoreMVC\\Prj\\WebApplication1\\WebApplication1.csproj",
+  "projectFilePath": "C:\\Users\\baris.tas\\Desktop\\csh\\TeddySmithCoreMVC\\Prj\\WebApplication1\\RunGroopWebApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\baris.tas\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\baris.tas\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

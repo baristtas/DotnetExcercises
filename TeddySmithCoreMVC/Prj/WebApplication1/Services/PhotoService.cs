@@ -24,7 +24,7 @@ namespace WebApplication1.Services
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
+                    Transformation = new Transformation().AspectRatio("16:9").Crop("fill").Gravity("center")
                 };
                 uploadResult = await m_cloudinary.UploadAsync(uploadParams);    
             }

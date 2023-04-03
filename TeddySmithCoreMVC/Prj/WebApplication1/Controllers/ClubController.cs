@@ -38,7 +38,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateClubViewModel clubViewModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var result = await m_photoService.AddPhotoAsync(clubViewModel.Image);
 
@@ -51,7 +51,7 @@ namespace WebApplication1.Controllers
                     {
                         City = clubViewModel.Address.City,
                         State = clubViewModel.Address.State,
-                        Street= clubViewModel.Address.Street
+                        Street = clubViewModel.Address.Street
                     }
                 };
                 m_clubRepository.Add(club);
@@ -63,6 +63,63 @@ namespace WebApplication1.Controllers
             }
 
             return View(clubViewModel);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var ClubToEdit = await m_clubRepository.GetByIdAsync(id);
+            if (ClubToEdit == null) return View("Error");
+
+            var clubVM = new EditClubViewModel
+            {
+                Title = ClubToEdit.Title,
+                Description = ClubToEdit.Description,
+                AddressId = ClubToEdit.Address.id,
+                Address = ClubToEdit.Address,
+                ClubCategory = ClubToEdit.ClubCategory,
+                URL = ClubToEdit.Image
+            };
+
+            return View(clubVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditClubViewModel clubVMToEdit)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit club");
+                return View("Edit", clubVMToEdit);
+            }
+            var userClub = await m_clubRepository.GetByIdAsync(id);
+
+            if (userClub != null)
+            {
+                try
+                {
+                    await m_photoService.DeletePhotoAsync(userClub.Image);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Couldnt delete previously uploaded photo!");
+                    return View(clubVMToEdit);
+                }
+
+                var newImage = await m_photoService.AddPhotoAsync(clubVMToEdit.Image);
+
+
+                userClub.ClubCategory = clubVMToEdit.ClubCategory;
+                userClub.Address = clubVMToEdit.Address;
+                userClub.AddressId = clubVMToEdit.AddressId;
+                userClub.Image = newImage.Url.ToString();
+                userClub.Title = clubVMToEdit.Title;
+                userClub.Description = clubVMToEdit.Description;
+                userClub.Id = clubVMToEdit.Id;
+
+                m_clubRepository.Update(userClub);
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
