@@ -126,8 +126,8 @@ namespace WebApplication1.Controllers
             return View(raceDetails);
         }
 
-        [HttpPost, ActionName("DeleteClub")]
-        public async Task<IActionResult> DeleteClub(int id)
+        [HttpPost, ActionName("DeleteRace")]
+        public async Task<IActionResult> DeleteRace(int id)
         {
             var raceToDelete = await m_raceRepository.GetByIdAsync(id);
             if (raceToDelete == null) return View("Error");
