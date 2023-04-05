@@ -54,5 +54,18 @@ namespace RunGroopWebApp.Controllers
             TempData["Error"] = "Wrong Credientals. Pls try again";
             return View(loginVM);
         }
+
+        public IActionResult Register()
+        {
+            var response = new RegisterViewModel();
+
+            return View(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel registerVM)
+        {
+            return View(registerVM);
+        }
     }
 }
