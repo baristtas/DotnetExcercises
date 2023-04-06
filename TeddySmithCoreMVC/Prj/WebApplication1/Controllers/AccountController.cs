@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RunGroopWebApp.Data;
 using RunGroopWebApp.ViewModels;
 using WebApplication1.Data;
 using WebApplication1.Models;
@@ -65,7 +66,35 @@ namespace RunGroopWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerVM)
         {
-            return View(registerVM);
+            if (!ModelState.IsValid) return View(registerVM);
+
+            var user = await m_userManager.FindByEmailAsync(registerVM.EmailAddress);
+
+            if (user != null)
+            {
+                TempData["Error"] = "E-mail is already registered!";
+                return View(registerVM);
+                
+            }
+            var newUser = new AppUser
+            {
+                Email = registerVM.EmailAddress,
+                UserName = registerVM.EmailAddress
+            };
+            var newUserResponse = await m_userManager.CreateAsync(newUser, registerVM.Password);
+
+            if (newUserResponse.Succeeded)
+            {
+                await m_userManager.AddToRoleAsync(newUser, UserRoles.User);
+            }
+            return View("Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await m_signInManager.SignOutAsync();
+            return RedirectToAction("Index","Race");
         }
     }
 }
