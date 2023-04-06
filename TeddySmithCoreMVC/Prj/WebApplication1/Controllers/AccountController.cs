@@ -87,14 +87,14 @@ namespace RunGroopWebApp.Controllers
             {
                 await m_userManager.AddToRoleAsync(newUser, UserRoles.User);
             }
-            return View("Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await m_signInManager.SignOutAsync();
-            return RedirectToAction("Index","Race");
+            return RedirectToAction("Index","Home");
         }
     }
 }
