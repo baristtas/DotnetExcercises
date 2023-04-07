@@ -12,10 +12,10 @@ namespace RunGroopWebApp.Controllers
         private readonly UserManager<AppUser> m_userManager;
         private readonly SignInManager<AppUser> m_signInManager;
         private readonly ApplicationDbContext m_dbContext;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser>signInManager, ApplicationDbContext dbContext)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ApplicationDbContext dbContext)
         {
-            m_userManager= userManager;
-            m_dbContext= dbContext;
+            m_userManager = userManager;
+            m_dbContext = dbContext;
             m_signInManager = signInManager;
         }
         public IActionResult Login()
@@ -26,25 +26,25 @@ namespace RunGroopWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult>Login(LoginViewModel loginVM)
+        public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
-            if(!ModelState.IsValid) return View(loginVM);
+            if (!ModelState.IsValid) return View(loginVM);
 
             var user = await m_userManager.FindByEmailAsync(loginVM.EmailAddress);
 
-            if(user != null)
+            if (user != null)
             {
                 //User is found, check password
                 var passwordCheck = await m_userManager.CheckPasswordAsync(user, loginVM.Password);
 
-                if(passwordCheck)
+                if (passwordCheck)
                 {
                     //Password correct. Sign in.
-                    var result = await m_signInManager.PasswordSignInAsync(user,loginVM.Password,false,false);
+                    var result = await m_signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
 
                     if (result.Succeeded)
                     {
-                        return RedirectToAction ("Index", "Race");
+                        return RedirectToAction("Index", "Race");
                     }
                 }
                 //Password is incorrect
@@ -73,8 +73,13 @@ namespace RunGroopWebApp.Controllers
             if (user != null)
             {
                 TempData["Error"] = "E-mail is already registered!";
+                //if(registerVM.EmailAddress == "baristtas@gmail.com")
+                //{
+                //    await m_userManager.AddToRoleAsync(user, UserRoles.Admin);
+                //}
+
                 return View(registerVM);
-                
+
             }
             var newUser = new AppUser
             {
@@ -83,10 +88,13 @@ namespace RunGroopWebApp.Controllers
             };
             var newUserResponse = await m_userManager.CreateAsync(newUser, registerVM.Password);
 
+            
             if (newUserResponse.Succeeded)
             {
                 await m_userManager.AddToRoleAsync(newUser, UserRoles.User);
             }
+            var result = await m_signInManager.PasswordSignInAsync(registerVM.EmailAddress, registerVM.Password, false, false);
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -94,7 +102,8 @@ namespace RunGroopWebApp.Controllers
         public async Task<IActionResult> Logout()
         {
             await m_signInManager.SignOutAsync();
-            return RedirectToAction("Index","Home");
+            
+            return RedirectToAction("Index", "Home");
         }
     }
 }
