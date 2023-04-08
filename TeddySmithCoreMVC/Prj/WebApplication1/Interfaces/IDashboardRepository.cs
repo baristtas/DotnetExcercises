@@ -4,7 +4,7 @@ namespace RunGroopWebApp.Interfaces
 {
     public interface IDashboardRepository
     {
-        Task<List<Race>> GetAllUserRaces();
-        Task<List<Club>> GetAllUserClubs();
+        public Task<List<Race>> GetAllUserRaces();
+        public Task<List<Club>> GetAllUserClubs();
     }
 }

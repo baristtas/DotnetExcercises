@@ -1,26 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Data;
+using RunGroopWebApp.Interfaces;
+using RunGroopWebApp.ViewModels;
+using WebApplication1.Models;
 
 namespace RunGroopWebApp.Controllers
 {
     public class DashboardController : Controller
     {
-        private readonly ApplicationDbContext m_DbContext;
-        public DashboardController(ApplicationDbContext context) 
+        private readonly IDashboardRepository m_dashboardRepository;
+        public DashboardController(IDashboardRepository dashboardRepository) 
         {
-            m_DbContext= context;
+            m_dashboardRepository= dashboardRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            if(User.Identity.IsAuthenticated)
+            List<Club> clubs = await m_dashboardRepository.GetAllUserClubs();
+            List<Race> races = await m_dashboardRepository.GetAllUserRaces();
+
+            var dashboardVM = new DashboardViewModel
             {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
+                UserClubs = clubs,
+                UserRaces = races
+            };
+
+            return View(dashboardVM);
         }
     }
 }

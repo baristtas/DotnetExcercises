@@ -1,4 +1,6 @@
-﻿using RunGroopWebApp.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using RunGroopWebApp.Interfaces;
+using WebApplication1.Interfaces;
 using WebApplication1.Data;
 using WebApplication1.Models;
 
@@ -20,12 +22,15 @@ namespace RunGroopWebApp.Repository
             var currUser = m_httpContextAccessor.HttpContext?.User;
             var userClubs = m_dbContext.Clubs.Where(r => r.AppUser.Id == currUser.ToString());
 
-            return userClubs.ToList();
+            return await userClubs.ToListAsync();
         }
 
-        public Task<List<Race>> GetAllUserRaces()
+        public async Task<List<Race>> GetAllUserRaces()
         {
-            throw new NotImplementedException();
+            var currUser = m_httpContextAccessor.HttpContext.User;
+            var userRaces = m_dbContext.Races.Where(r=> r.AppUser.Id ==currUser.ToString());
+            
+            return await userRaces.ToListAsync();
         }
     }
 }
