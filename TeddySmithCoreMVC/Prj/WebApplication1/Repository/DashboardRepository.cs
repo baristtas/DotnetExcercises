@@ -20,7 +20,7 @@ namespace RunGroopWebApp.Repository
         public async Task<List<Club>> GetAllUserClubs()
         {
             var currUser = m_httpContextAccessor.HttpContext?.User;
-            var userClubs = m_dbContext.Clubs.Where(r => r.AppUser.Id == currUser.ToString());
+            var userClubs = m_dbContext.Clubs.Where(r => r.AppUser.Id == currUser.GetUserId());
 
             return await userClubs.ToListAsync();
         }

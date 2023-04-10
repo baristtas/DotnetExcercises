@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RunGroopWebApp;
+using System.Security.Claims;
 using WebApplication1.Data;
 using WebApplication1.Interfaces;
 using WebApplication1.Models;
@@ -11,11 +13,13 @@ namespace WebApplication1.Controllers
     {
         private readonly IClubRepository m_clubRepository;
         private readonly IPhotoService m_photoService;
+        private readonly IHttpContextAccessor m_httpContextAccessor;
 
-        public ClubController(IClubRepository clubRepository, IPhotoService photoService)
+        public ClubController(IClubRepository clubRepository, IPhotoService photoService, IHttpContextAccessor httpContextAccessor)
         {
             m_clubRepository = clubRepository;
             m_photoService = photoService;
+            m_httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IActionResult> Index()
@@ -32,7 +36,13 @@ namespace WebApplication1.Controllers
 
         public async Task<IActionResult> Create()
         {
-            return View();
+            var currUserId = m_httpContextAccessor.HttpContext.User.GetUserId();
+
+            var createClubViewModel = new CreateClubViewModel
+            {
+                AppUserId = currUserId
+            };
+            return View(createClubViewModel);
         }
 
         [HttpPost]
@@ -47,13 +57,14 @@ namespace WebApplication1.Controllers
                     Title = clubViewModel.Title,
                     Description = clubViewModel.Description,
                     Image = result.Url.ToString(),
-                Address = new Address
+                    AppUserId = clubViewModel.AppUserId,
+                    Address = new Address
                     {
                         City = clubViewModel.Address.City,
                         State = clubViewModel.Address.State,
                         Street = clubViewModel.Address.Street
                     }
-                    
+
                 };
                 m_clubRepository.Add(club);
                 return RedirectToAction("Index");

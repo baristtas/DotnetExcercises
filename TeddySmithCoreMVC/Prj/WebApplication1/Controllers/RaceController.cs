@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RunGroopWebApp;
 using WebApplication1.Interfaces;
 using WebApplication1.Models;
 using WebApplication1.Repository;
@@ -10,11 +11,12 @@ namespace WebApplication1.Controllers
     {
         private readonly IRaceRepository m_raceRepository;
         private readonly IPhotoService m_photoService;
-
-        public RaceController(IRaceRepository raceRepository, IPhotoService photoService)
+        private readonly IHttpContextAccessor m_httpContextAccessor;
+        public RaceController(IRaceRepository raceRepository, IPhotoService photoService, IHttpContextAccessor httpContextAccessor)
         {
             m_raceRepository = raceRepository;
             m_photoService = photoService;
+            m_httpContextAccessor = httpContextAccessor;
         }
         public async Task<IActionResult> Index()
         {
@@ -29,6 +31,8 @@ namespace WebApplication1.Controllers
 
         public async Task<IActionResult> Create()
         {
+            var currUser = m_httpContextAccessor.HttpContext.User.GetUserId();
+
             return View();
         }
 
