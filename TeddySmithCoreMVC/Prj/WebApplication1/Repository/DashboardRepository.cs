@@ -28,7 +28,7 @@ namespace RunGroopWebApp.Repository
         public async Task<List<Race>> GetAllUserRaces()
         {
             var currUser = m_httpContextAccessor.HttpContext.User;
-            var userRaces = m_dbContext.Races.Where(r=> r.AppUser.Id ==currUser.ToString());
+            var userRaces = m_dbContext.Races.Where(r=> r.AppUser.Id == currUser.GetUserId());
             
             return await userRaces.ToListAsync();
         }

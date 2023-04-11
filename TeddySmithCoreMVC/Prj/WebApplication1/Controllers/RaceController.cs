@@ -31,9 +31,12 @@ namespace WebApplication1.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var currUser = m_httpContextAccessor.HttpContext.User.GetUserId();
-
-            return View();
+            var currUserId = m_httpContextAccessor.HttpContext.User.GetUserId();
+            var createVM = new CreateRaceViewModel
+            {
+                AppUserId = currUserId
+            };
+            return View(createVM);
         }
 
 
@@ -50,7 +53,7 @@ namespace WebApplication1.Controllers
                     Description = raceVM.Description,
                     RaceCategory = raceVM.RaceCategory,
                     Image = uploadedImage.Url.ToString(),
-
+                    AppUserId = raceVM.AppUserId,
                     Address = new Address
                     {
                         Street = raceVM.Address.Street,

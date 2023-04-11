@@ -57,13 +57,14 @@ namespace WebApplication1.Controllers
                     Title = clubViewModel.Title,
                     Description = clubViewModel.Description,
                     Image = result.Url.ToString(),
-                    AppUserId = clubViewModel.AppUserId,
+                    AppUserId = m_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
                     Address = new Address
                     {
                         City = clubViewModel.Address.City,
                         State = clubViewModel.Address.State,
                         Street = clubViewModel.Address.Street
-                    }
+                    },
+                    ClubCategory = clubViewModel.ClubCategory
 
                 };
                 m_clubRepository.Add(club);
