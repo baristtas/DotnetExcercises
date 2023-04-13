@@ -36,13 +36,17 @@ namespace WebApplication1.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var currUserId = m_httpContextAccessor.HttpContext.User.GetUserId();
-
-            var createClubViewModel = new CreateClubViewModel
+            if(User.Identity.IsAuthenticated)
             {
-                AppUserId = currUserId
-            };
-            return View(createClubViewModel);
+                var currUserId = User.GetUserId();
+
+                var createClubViewModel = new CreateClubViewModel
+                {
+                    AppUserId = currUserId
+                };
+                return View(createClubViewModel);
+            }
+            return View();
         }
 
         [HttpPost]
